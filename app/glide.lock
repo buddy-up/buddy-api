@@ -1,0 +1,309 @@
+hash: 3441bf6ff6d443d7e65fcdfc4f1d1b67e506cee012ed3b4901bbe2aab9890aa9
+updated: 2018-09-08T03:40:46.431149973-04:00
+imports:
+- name: cloud.google.com/go
+  version: 7630042f56f0e11b1a93f5925d228a46c2daf71e
+  subpackages:
+  - compute/metadata
+  - iam
+  - internal
+  - internal/optional
+  - internal/trace
+  - internal/version
+  - storage
+- name: contrib.go.opencensus.io/exporter/stackdriver
+  version: 506554d29396710fef1f4113ce04fecb25b1f835
+  subpackages:
+  - propagation
+- name: github.com/bradfitz/gomemcache
+  version: bc664df9673713a0ccf26e3b55a673ec7301088b
+  subpackages:
+  - memcache
+- name: github.com/casbin/casbin
+  version: 1b1168f22dba11e2a5ac8f68792c1a91c362ff41
+  subpackages:
+  - config
+  - effect
+  - model
+  - persist
+  - persist/file-adapter
+  - rbac
+  - rbac/default-role-manager
+  - util
+- name: github.com/client9/misspell
+  version: c0b55c8239520f6b5aa15a0207ca8b28027ba49e
+  subpackages:
+  - cmd/misspell
+- name: github.com/flosch/pongo2
+  version: 24195e6d38b06020d7a92c7b11960cf2e7cad2f2
+- name: github.com/garyburd/redigo
+  version: 569eae59ada904ea8db7a225c2b47165af08735a
+  subpackages:
+  - internal
+  - redis
+- name: github.com/go-sql-driver/mysql
+  version: 99ff426eb706cffe92ff3d058e168b278cabf7c7
+- name: github.com/go-stack/stack
+  version: 2fee6af1a9795aafbe0253a0cfbdf668e1fb8a9a
+- name: github.com/golang/lint
+  version: 06c8688daad7faa9da5a0c2f163a3d14aac986ca
+  subpackages:
+  - golint
+- name: github.com/golang/protobuf
+  version: b27b920f9e71b439b873b17bf99f56467623814a
+  subpackages:
+  - proto
+  - protoc-gen-go
+  - protoc-gen-go/descriptor
+  - protoc-gen-go/generator
+  - protoc-gen-go/generator/internal/remap
+  - protoc-gen-go/grpc
+  - protoc-gen-go/plugin
+  - ptypes
+  - ptypes/any
+  - ptypes/duration
+  - ptypes/timestamp
+- name: github.com/googleapis/gax-go
+  version: 1ef592c90f479e3ab30c6c2312e20e13881b7ea6
+- name: github.com/jinzhu/gorm
+  version: 32455088f24d6b1e9a502fb8e40fdc16139dbea8
+  subpackages:
+  - dialects/mysql
+  - dialects/postgres
+  - dialects/sqlite
+- name: github.com/jinzhu/inflection
+  version: 04140366298a54a039076d798123ffa108fff46c
+- name: github.com/juju/errors
+  version: 22422dad46e14561a0854ad42497a75af9b61909
+- name: github.com/kisielk/gotool
+  version: 80517062f582ea3340cd4baf70e86d539ae7d84d
+  subpackages:
+  - internal/load
+- name: github.com/klauspost/compress
+  version: b50017755d442260d792c34c7c43216d9ba7ffc7
+  subpackages:
+  - flate
+  - gzip
+  - zlib
+- name: github.com/klauspost/cpuid
+  version: e7e905edc00ea8827e58662220139109efea09db
+- name: github.com/Knetic/govaluate
+  version: 9aa49832a739dcd78a5542ff189fb82c3e423116
+- name: github.com/lann/builder
+  version: 47ae307949d02aa1f1069fdafc00ca08e1dbabac
+- name: github.com/lann/ps
+  version: 62de8c46ede02a7675c4c79c84883eb164cb71e3
+- name: github.com/lib/pq
+  version: 4ded0e9383f75c197b3a2aaa6d590ac52df6fd79
+  subpackages:
+  - hstore
+  - oid
+- name: github.com/mattn/go-sqlite3
+  version: 3198c7714d5f8be941dd06c30208e623aa5abf90
+- name: github.com/newrelic/go-agent
+  version: 46d73e6be8b4faeee70850d0df829e4fe00d6819
+  subpackages:
+  - internal
+  - internal/cat
+  - internal/jsonx
+  - internal/logger
+  - internal/sysinfo
+  - internal/utilization
+- name: github.com/patrickmn/go-cache
+  version: 5633e0862627c011927fa39556acae8b1f1df58a
+- name: github.com/pkg/errors
+  version: 816c9085562cd7ee03e7f8188a1cfd942858cded
+- name: github.com/revel/cron
+  version: 5d31bd20c7c41898f91332a03f71069dde3e69aa
+- name: github.com/tylerb/gls
+  version: e606233f194d6c314156dc6a35f21a42a470c6f6
+- name: github.com/valyala/bytebufferpool
+  version: cdfbe9377474227bb42120c1e22fd4433e7f69bf
+- name: github.com/valyala/fasthttp
+  version: c6fd90e432cc0afd32a031d778e86674af3f010b
+  subpackages:
+  - fasthttputil
+  - stackless
+- name: github.com/yosssi/ace
+  version: 2b21b56204aee785bf8d500c3f9dcbe3ed7d4515
+- name: go.opencensus.io
+  version: b11f239c032624b045c4c2bfd3d1287b4012ce89
+  subpackages:
+  - internal
+  - internal/tagencoding
+  - plugin/ochttp
+  - plugin/ochttp/propagation/b3
+  - stats
+  - stats/internal
+  - stats/view
+  - tag
+  - trace
+  - trace/internal
+  - trace/propagation
+  - trace/tracestate
+- name: go4.org
+  version: 417644f6feb5ed3a356ca5d6d8e3a3fac7dfd33f
+  subpackages:
+  - syncutil/singleflight
+- name: golang.org/x/build
+  version: a196f5a8e8d347b6b9fe4cd225a3393a77c03214
+  subpackages:
+  - autocertcache
+- name: golang.org/x/crypto
+  version: 0709b304e793a5edb4a2c0145f281ecdc20838a4
+  subpackages:
+  - acme
+  - acme/autocert
+  - bcrypt
+  - blowfish
+  - ssh/terminal
+- name: golang.org/x/lint
+  version: 06c8688daad7faa9da5a0c2f163a3d14aac986ca
+- name: golang.org/x/net
+  version: 161cd47e91fd58ac17490ef4d742dc98bb4cf60e
+  subpackages:
+  - context
+  - context/ctxhttp
+  - http/httpguts
+  - http2
+  - http2/hpack
+  - idna
+  - internal/timeseries
+  - trace
+- name: golang.org/x/oauth2
+  version: d2e6202438beef2727060aa7cabdd924d92ebfd9
+  subpackages:
+  - google
+  - internal
+  - jws
+  - jwt
+- name: golang.org/x/sys
+  version: 917fdcba135dcbaccd57425db91723541b4427c8
+  subpackages:
+  - unix
+  - windows
+- name: golang.org/x/text
+  version: 4ae1256249243a4eb350a9a372e126557f2aa346
+  subpackages:
+  - encoding
+  - encoding/charmap
+  - encoding/htmlindex
+  - encoding/internal
+  - encoding/internal/identifier
+  - encoding/japanese
+  - encoding/korean
+  - encoding/simplifiedchinese
+  - encoding/traditionalchinese
+  - encoding/unicode
+  - internal/language
+  - internal/language/compact
+  - internal/tag
+  - internal/utf8internal
+  - language
+  - runes
+  - secure/bidirule
+  - transform
+  - unicode/bidi
+  - unicode/norm
+- name: golang.org/x/tools
+  version: 0aa4b8830f481fed77b73cf7cea2bc3129e05148
+  subpackages:
+  - cmd/goimports
+  - go/ast/astutil
+  - go/buildutil
+  - go/gcexportdata
+  - go/internal/cgo
+  - go/internal/gcimporter
+  - go/loader
+  - go/types/typeutil
+  - imports
+  - internal/fastwalk
+- name: google.golang.org/api
+  version: b609d5e6b7abb39ddb81f72bcccaff495f4efb71
+  subpackages:
+  - compute/v1
+  - gensupport
+  - googleapi
+  - googleapi/internal/uritemplates
+  - googleapi/transport
+  - internal
+  - iterator
+  - option
+  - storage/v1
+  - transport/http
+- name: google.golang.org/appengine
+  version: 03cac3b07182cfb08c0d0c0b6ee72a1ceb151c92
+  subpackages:
+  - cloudsql
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
+- name: google.golang.org/genproto
+  version: 11092d34479b07829b72e10713b159248caf5dad
+  subpackages:
+  - googleapis/api/annotations
+  - googleapis/iam/v1
+  - googleapis/rpc/code
+  - googleapis/rpc/status
+- name: google.golang.org/grpc
+  version: 5fe5ce74bb4367bbef83a0bf91e8af5f07160823
+  subpackages:
+  - balancer
+  - balancer/base
+  - balancer/roundrobin
+  - codes
+  - connectivity
+  - credentials
+  - encoding
+  - encoding/proto
+  - grpclog
+  - internal
+  - internal/backoff
+  - internal/channelz
+  - internal/envconfig
+  - internal/grpcrand
+  - internal/transport
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - resolver
+  - resolver/dns
+  - resolver/passthrough
+  - stats
+  - status
+  - tap
+- name: gopkg.in/gorp.v2
+  version: 6032c66e0f5f155fd56216ed14cbbdd991034605
+- name: gopkg.in/Masterminds/squirrel.v1
+  version: a6b93000bd219143c56c16e6cb1c4b91da3f224b
+- name: honnef.co/go/tools
+  version: 88497007e8588ea5b6baee991f74a1607e809487
+  subpackages:
+  - callgraph
+  - callgraph/static
+  - cmd/staticcheck
+  - deprecated
+  - functions
+  - internal/sharedcheck
+  - lint
+  - lint/lintdsl
+  - lint/lintutil
+  - ssa
+  - ssa/ssautil
+  - staticcheck
+  - staticcheck/vrp
+  - version
+testImports:
+- name: github.com/BurntSushi/toml
+  version: 3012a1dbe2e4bd1391d42b32f0577cb7bbc7f005
+- name: github.com/fsnotify/fsnotify
+  version: ccc981bf80385c528a65fbfdd49bf2d8da22aa23
+- name: gopkg.in/yaml.v2
+  version: 5420a8b6744d3b0345ab293f6fcba19c978f1183
