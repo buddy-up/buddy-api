@@ -18,14 +18,9 @@ type Application struct {
 	*revel.Controller
 }
 
-// The following keys correspond to a test application
-// registered on Facebook, and associated with the loisant.org domain.
-// You need to bind loisant.org to your machine with /etc/hosts to
-// test the application locally.
-
 var GOOGLE = &oauth2.Config{
-	ClientID:     "517346446613-15t9k43va8t4rfa2k56vba0cc6a9gk8h.apps.googleusercontent.com",
-	ClientSecret: "JTYTyBy-Gz-E_UFHfKAlneBI",
+	ClientID:     GOOGLE_CLIENT_ID,
+	ClientSecret:  GOOGLE_CLIENT_SECRET,
 	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 	Endpoint:     google.Endpoint,
 	RedirectURL:  "http://buddy-api.csh.rit.edu:8080/Application/Auth",
