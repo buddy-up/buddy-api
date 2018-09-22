@@ -1,0 +1,16 @@
+{{set . "title" "Home"}}
+{{template "header.html" .}}
+
+<h1>GOOGLE!</h1>
+
+<p>Google sign in</p>
+
+{{if .me}}
+<h3>You're {{.me.name}} on GOOGLE</h3>
+<img src="" />
+
+{{else}}
+<a href="{{.authUrl}}">login</a>
+{{end}}
+
+{{template "footer.html" .}}
