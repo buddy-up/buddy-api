@@ -10,7 +10,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 
-	"src/buddy-api/app/models"
+	"buddy-api/app/models"
 	"github.com/revel/revel"
 )
 
