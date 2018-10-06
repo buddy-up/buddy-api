@@ -1,20 +1,17 @@
 package controllers
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
+	_ "github.com/lib/pq"
+	"github.com/revel/revel"
+	"github.com/skylerjaneclark/buddy-api/app/models"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
-	_ "github.com/lib/pq"
-
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
-	"github.com/skylerjaneclark/buddy-api/app/models"
-
-	"github.com/revel/revel"
 )
 
 type Application struct {
@@ -29,24 +26,15 @@ var GOOGLE = &oauth2.Config{
 	RedirectURL:   os.Getenv("REDIRECT_URL"),
 }
 
+var DB_CONFIG = map[string]string{
+	"host" :os.Getenv("DB_HOSTNAME"),
+	"port" : "5432",
+	"user" : os.Getenv("DB_USER"),
+	"password" : os.Getenv("DB_PASSWORD"),
+	"dbname" : os.Getenv("DB_NAME"),
+}
 
 func (c Application) Index() revel.Result {
-	var host = os.Getenv("DB_HOSTNAME")
-	var port = 5432
-	var user = os.Getenv("DB_USER")
-	var password = os.Getenv("DB_PASSWORD")
-	var dbname = os.Getenv("DB_NAME")
-
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s",
-		host, port, user, password, dbname)
-
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
 	u := c.connected()
 	me := map[string]interface{}{}
 	if u != nil && u.AccessToken != "" {
@@ -59,6 +47,8 @@ func (c Application) Index() revel.Result {
 		}
 		revel.INFO.Println(me)
 	}
+
+	createUser(me)
 
 	authUrl := GOOGLE.AuthCodeURL("state", oauth2.AccessTypeOffline)
 	return c.Render(me, authUrl)
