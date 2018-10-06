@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
+	_ "github.com/lib/pq"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -14,7 +16,6 @@ import (
 
 	"github.com/revel/revel"
 )
-
 
 type Application struct {
 	*revel.Controller
@@ -28,7 +29,24 @@ var GOOGLE = &oauth2.Config{
 	RedirectURL:   os.Getenv("REDIRECT_URL"),
 }
 
+
 func (c Application) Index() revel.Result {
+	var host = os.Getenv("DB_HOSTNAME")
+	var port = 5432
+	var user = os.Getenv("DB_USER")
+	var password = os.Getenv("DB_PASSWORD")
+	var dbname = os.Getenv("DB_NAME")
+
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s",
+		host, port, user, password, dbname)
+
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
 	u := c.connected()
 	me := map[string]interface{}{}
 	if u != nil && u.AccessToken != "" {
