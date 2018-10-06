@@ -4,3 +4,4 @@ routes/
 app/controllers/oauth-creds.go
 .idea/
 conf/exec
+app/db/dbconf.yml

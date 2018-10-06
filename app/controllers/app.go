@@ -3,18 +3,16 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	_ "github.com/lib/pq"
+	"github.com/revel/revel"
+	"github.com/skylerjaneclark/buddy-api/app/models"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
-
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
-	"github.com/skylerjaneclark/buddy-api/app/models"
-
-	"github.com/revel/revel"
 )
-
 
 type Application struct {
 	*revel.Controller
@@ -26,6 +24,14 @@ var GOOGLE = &oauth2.Config{
 	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 	Endpoint:     google.Endpoint,
 	RedirectURL:   os.Getenv("REDIRECT_URL"),
+}
+
+var DB_CONFIG = map[string]string{
+	"host" :os.Getenv("DB_HOSTNAME"),
+	"port" : "5432",
+	"user" : os.Getenv("DB_USER"),
+	"password" : os.Getenv("DB_PASSWORD"),
+	"dbname" : os.Getenv("DB_NAME"),
 }
 
 func (c Application) Index() revel.Result {
@@ -41,6 +47,8 @@ func (c Application) Index() revel.Result {
 		}
 		revel.INFO.Println(me)
 	}
+
+	createUser(me)
 
 	authUrl := GOOGLE.AuthCodeURL("state", oauth2.AccessTypeOffline)
 	return c.Render(me, authUrl)
