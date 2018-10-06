@@ -33,6 +33,8 @@ var DB_CONFIG = map[string]string{
 	"dbname" : os.Getenv("DB_NAME"),
 }
 
+
+
 func (c Application) Index() revel.Result {
 	u := c.connected()
 	me := make(map[string]interface{})
@@ -47,7 +49,7 @@ func (c Application) Index() revel.Result {
 		response, _ := ioutil.ReadAll(data.Body)
 		json.Unmarshal(response, &me)
 
-		if getUserData(me).firstname == "" {
+		if getUserData(me, c.ViewArgs["user"].(*models.User)).Firstname == "" {
 			createUser(me)
 		}
 			fmt.Println(me)

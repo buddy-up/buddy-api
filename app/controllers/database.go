@@ -3,15 +3,10 @@ package controllers
 import (
 	"database/sql"
 	"fmt"
-	"math/big"
+	"github.com/skylerjaneclark/buddy-api/app/models"
+
 )
 
-type user struct{
-	firstname string
-	lastname string
-	email string
-	id big.Int
-}
 
 func createUser(userData map[string]interface{}){
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+ "password=%s dbname=%s",
@@ -49,7 +44,7 @@ func createUser(userData map[string]interface{}){
 	}
 }
 
-func getUserData(userData map[string]interface{}) user {
+func getUserData(userData map[string]interface{}, user *models.User) *models.User {
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+ "password=%s dbname=%s",
 		DB_CONFIG["host"], DB_CONFIG["port"], DB_CONFIG["user"], DB_CONFIG["password"], DB_CONFIG["dbname"])
 
@@ -59,15 +54,13 @@ func getUserData(userData map[string]interface{}) user {
 	}
 	defer db.Close()
 
-	currentUser := user{}
-
 	sqlStatement := `SELECT firstname, lastname FROM users WHERE id=$1;`
 	row:= db.QueryRow(sqlStatement, userData["sub"])
-	switch err := row.Scan(&currentUser.firstname, &currentUser.lastname); err{
+	switch err := row.Scan(&user.Firstname, &user.Lastname); err{
 		case sql.ErrNoRows:
 			fmt.Print("")
 		case nil:
-			fmt.Print( currentUser.firstname, currentUser.lastname)
+			fmt.Print( user.Firstname, user.Lastname)
 		default:
 			panic(err)
 	}
@@ -75,6 +68,6 @@ func getUserData(userData map[string]interface{}) user {
 	if err != nil {
 		panic(err)
 	}
-	return currentUser
+	return user
 
 }
