@@ -9,10 +9,11 @@ import (
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"github.com/skylerjaneclark/buddy-api/app/models"
 
-	"buddy-api/app/models"
 	"github.com/revel/revel"
 )
+
 
 type Application struct {
 	*revel.Controller
