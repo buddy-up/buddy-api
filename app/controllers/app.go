@@ -25,7 +25,7 @@ var GOOGLE = &oauth2.Config{
 	ClientSecret:  os.Getenv("GOOGLE_CLIENT_SECRET"),
 	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 	Endpoint:     google.Endpoint,
-	RedirectURL:  os.Getenv("REDIRECT_URL"),
+	RedirectURL:   os.Getenv("REDIRECT_URL"),
 }
 
 func (c Application) Index() revel.Result {
@@ -59,6 +59,11 @@ func (c Application) Auth(code string) revel.Result {
 	return c.Redirect(Application.Index)
 }
 
+func (c Application) Logout (code string) revel.Result {
+	c.connected().AccessToken = ""
+	return c.Redirect(Application.Index)
+}
+
 func setuser(c *revel.Controller) revel.Result {
 	var user *models.User
 	if _, ok := c.Session["uid"]; ok {
@@ -73,6 +78,7 @@ func setuser(c *revel.Controller) revel.Result {
 	c.ViewArgs["user"] = user
 	return nil
 }
+
 
 func init() {
 	revel.InterceptFunc(setuser, revel.BEFORE, &Application{})
