@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 
 	"golang.org/x/oauth2"
@@ -20,8 +21,8 @@ type Application struct {
 }
 
 var GOOGLE = &oauth2.Config{
-	ClientID:     GOOGLE_CLIENT_ID,
-	ClientSecret:  GOOGLE_CLIENT_SECRET,
+	ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
+	ClientSecret:  os.Getenv("GOOGLE_CLIENT_SECRET"),
 	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 	Endpoint:     google.Endpoint,
 	RedirectURL:  "http://buddy-api.csh.rit.edu:8080/Application/Auth",
