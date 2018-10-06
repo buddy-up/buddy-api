@@ -8,8 +8,7 @@ import (
 	"github.com/skylerjaneclark/buddy-api/app/models"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	"net/http"
-	"net/url"
+	"io/ioutil"
 	"os"
 	"strconv"
 )
@@ -21,7 +20,7 @@ type Application struct {
 var GOOGLE = &oauth2.Config{
 	ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
 	ClientSecret:  os.Getenv("GOOGLE_CLIENT_SECRET"),
-	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+	Scopes:       []string{"https://www.googleapis.com/auth/plus.login"},
 	Endpoint:     google.Endpoint,
 	RedirectURL:   os.Getenv("REDIRECT_URL"),
 }
@@ -36,26 +35,28 @@ var DB_CONFIG = map[string]string{
 
 func (c Application) Index() revel.Result {
 	u := c.connected()
-	me := map[string]interface{}{}
-	if u != nil && u.AccessToken != "" {
-		resp, _ := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" +
-			url.QueryEscape(u.AccessToken))
+	me := make(map[string]interface{})
 
-		defer resp.Body.Close()
-		if err := json.NewDecoder(resp.Body).Decode(&me); err != nil {
-			revel.ERROR.Println(err)
+	if u != nil && u.AccessToken != nil  {
+		client :=GOOGLE.Client(oauth2.NoContext, u.AccessToken )
+		data, err := client.Get("https://www.googleapis.com/oauth2/v3/userinfo")
+		if err != nil {
+			fmt.Println("shit")}
+		defer data.Body.Close()
+
+		response, _ := ioutil.ReadAll(data.Body)
+		json.Unmarshal(response, &me)
+
+		if getUserData(me).firstname == "" {
+			createUser(me)
 		}
-		revel.INFO.Println(me)
+			fmt.Println(me)
 	}
-
-	createUser(me)
-
 	authUrl := GOOGLE.AuthCodeURL("state", oauth2.AccessTypeOffline)
 	return c.Render(me, authUrl)
 }
 
 func (c Application) Auth(code string) revel.Result {
-
 	tok, err := GOOGLE.Exchange(oauth2.NoContext, code)
 	if err != nil {
 		revel.ERROR.Println(err)
@@ -63,12 +64,12 @@ func (c Application) Auth(code string) revel.Result {
 	}
 
 	user := c.connected()
-	user.AccessToken = tok.AccessToken
+	user.AccessToken = tok
 	return c.Redirect(Application.Index)
 }
 
 func (c Application) Logout (code string) revel.Result {
-	c.connected().AccessToken = ""
+	c.connected().AccessToken = nil
 	return c.Redirect(Application.Index)
 }
 

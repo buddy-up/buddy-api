@@ -1,10 +1,13 @@
 package models
 
-import "math/rand"
+import (
+	"golang.org/x/oauth2"
+	"math/rand"
+)
 
 type User struct {
 	Uid         int
-	AccessToken string
+	AccessToken *oauth2.Token
 }
 
 var db = make(map[int]*User)
