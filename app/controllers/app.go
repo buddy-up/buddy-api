@@ -33,8 +33,6 @@ var DB_CONFIG = map[string]string{
 	"dbname" : os.Getenv("DB_NAME"),
 }
 
-
-
 func (c Application) Index() revel.Result {
 	u := c.connected()
 	me := make(map[string]interface{})
@@ -44,6 +42,9 @@ func (c Application) Index() revel.Result {
 		data, err := client.Get("https://www.googleapis.com/oauth2/v3/userinfo")
 		if err != nil {
 			fmt.Println("shit")}
+			u.AccessToken = nil
+			authUrl := GOOGLE.AuthCodeURL("state", oauth2.AccessTypeOffline)
+			return c.Render(me, authUrl)
 		defer data.Body.Close()
 
 		response, _ := ioutil.ReadAll(data.Body)
