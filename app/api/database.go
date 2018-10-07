@@ -1,11 +1,18 @@
-package controllers
+package api
 
 import (
 	"database/sql"
 	"fmt"
 	"github.com/skylerjaneclark/buddy-api/app/models"
-
+	"os"
 )
+var DB_CONFIG = map[string]string{
+	"host" :os.Getenv("DB_HOSTNAME"),
+	"port" : "5432",
+	"user" : os.Getenv("DB_USER"),
+	"password" : os.Getenv("DB_PASSWORD"),
+	"dbname" : os.Getenv("DB_NAME"),
+}
 
 
 func createUser(userData map[string]interface{}){
@@ -64,10 +71,8 @@ func getUserData(userData map[string]interface{}, user *models.User) *models.Use
 		default:
 			panic(err)
 	}
-
 	if err != nil {
 		panic(err)
 	}
 	return user
-
 }
