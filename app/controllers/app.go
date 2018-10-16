@@ -6,6 +6,7 @@ import (
 	"github.com/revel/revel"
 	"github.com/skylerjaneclark/buddy-api/app/api"
 	"github.com/skylerjaneclark/buddy-api/app/models"
+	"golang.org/x/oauth2"
 	"strconv"
 )
 
@@ -14,6 +15,9 @@ type Application struct {
 }
 
 func (c Application) Index() revel.Result {
+	fmt.Println(c.connected().AccessToken)
+	fmt.Println(c.connected().Uid)
+	fmt.Println("_____________________")
 	u := c.connected()
 	var tokenData api.AccessTokenData
 	tokenData = api.GetAccessToken(u.AccessToken, c.ViewArgs["user"].(*models.User))
@@ -25,21 +29,24 @@ func (c Application) Index() revel.Result {
 }
 
 func (c Application) Auth(code string) revel.Result {
-	var tok = api.Authenticate(code)
+	tok, err := api.GOOGLE.Exchange(oauth2.NoContext, code)
+	if err != nil {
+		fmt.Println(err)
+		return c.Redirect(Application.Index)
+	}
 	user := c.connected()
 	user.AccessToken = tok
-	return c.Redirect(Application.Index)
-}
+	return c.Redirect(Application.Index)}
 
 func (c Application) Logout (code string) revel.Result {
 	c.connected().AccessToken = nil
 	return c.Redirect(Application.Index)
 }
 
-
-func (c Application) Location (location map[string]interface{}) revel.Result {
-	return nil
-}
+//
+//func (c Application) Location (location map[string]interface{}) revel.Result {
+//	return nil
+//}
 
 
 func setuser(c *revel.Controller) revel.Result {
@@ -52,7 +59,6 @@ func setuser(c *revel.Controller) revel.Result {
 		user = models.NewUser()
 		c.Session["uid"] = fmt.Sprintf("%d", user.Uid)
 	}
-
 	c.ViewArgs["user"] = user
 	return nil
 }
