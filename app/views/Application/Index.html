@@ -1,15 +1,16 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
-
 <h1>GOOGLE!</h1>
-
 <p>Google sign in</p>
 
 {{if .me}}
 <h3>You're {{.me.name}} on GOOGLE</h3>
-<img src="" />
-<a href="/logout">logout</a>
-
+    <div>
+        <a href="/logout">logout</a>
+    </div>
+    <div>
+        <button onclick="getLocation()">Check In</button>
+    </div>
 {{else}}
 <a href="{{.authUrl}}">login</a>
 {{end}}
