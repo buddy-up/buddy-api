@@ -8,6 +8,9 @@ module:testrunner
 GET     /                                       Application.Index
 GET     /logout                                 Application.Logout
 
+#Location Data
+POST    /checkin                                Application.CheckIn
+
 # Map static resources from the /app/public folder to the /public path
 GET     /public/*filepath              Static.Serve("public")
 

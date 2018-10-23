@@ -32,7 +32,6 @@ func GetAccessToken (accessToken *oauth2.Token, user *models.User) AccessTokenDa
 	if err != nil {
 	return AccessTokenData{nil, GOOGLE.AuthCodeURL("state", oauth2.AccessTypeOffline), nil}
 	}
-
 	defer data.Body.Close()
 	response, _ := ioutil.ReadAll(data.Body)
 	json.Unmarshal(response, &me)
