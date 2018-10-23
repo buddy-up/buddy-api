@@ -5,10 +5,11 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/revel/revel"
 	"github.com/skylerjaneclark/buddy-api/app/models"
+	"os"
 )
 
 func RedisConnect() redis.Conn {
-	c, err := redis.Dial("tcp", ":6379")
+	c, err := redis.Dial(os.Getenv("REDIS_URI"), ":6379")
 	if err != nil{
 		panic(err)
 	}
