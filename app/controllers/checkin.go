@@ -9,10 +9,12 @@ import (
 )
 
 func RedisConnect() redis.Conn {
-	c, err := redis.Dial(os.Getenv("REDIS_URI"), ":6379")
+	c, err := redis.Dial(os.Getenv("REDIS_URI"), os.Getenv("REDIS_PORT"))
 	if err != nil{
 		panic(err)
 	}
+	response, err := c.Do("AUTH", os.Getenv("REDIS_PASSWORD"))
+	fmt.Printf("Connected! ", response)
 	return c
 }
 
