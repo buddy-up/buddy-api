@@ -7,14 +7,19 @@ import (
 	"os"
 )
 var DB_CONFIG = map[string]string{
-	"host" :os.Getenv("DB_HOSTNAME"),
-	"port" : "5432",
-	"user" : os.Getenv("DB_USER"),
-	"password" : os.Getenv("DB_PASSWORD"),
-	"dbname" : os.Getenv("DB_NAME"),
+	"host" :os.Getenv("DB_HOSTNAME"),			//The hostname of the database to connect to
+	"port" : "5432",								//The port to connect to the db on. 5432 by default on postgres
+	"user" : os.Getenv("DB_USER"),				//The db user
+	"password" : os.Getenv("DB_PASSWORD"),		//The password to connect with
+	"dbname" : os.Getenv("DB_NAME"),			//The name of the db to connect to
 }
 
-
+/*
+	createUser
+	This is the function that creates the user.
+	It first connects to the database, then gets the data given by the session's user object,
+	and inserts those into the database as a new user.
+*/
 func createUser(userData map[string]interface{}){
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+ "password=%s dbname=%s",
 		DB_CONFIG["host"], DB_CONFIG["port"], DB_CONFIG["user"], DB_CONFIG["password"], DB_CONFIG["dbname"])
@@ -50,7 +55,11 @@ func createUser(userData map[string]interface{}){
 		}
 	}
 }
-
+/*
+	getUserData
+	Gets the userData from a returning user.
+	It connects to the db and gets the user that exists with the id.
+*/
 func getUserData(userData map[string]interface{}, user *models.User) *models.User {
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+ "password=%s dbname=%s",
 		DB_CONFIG["host"], DB_CONFIG["port"], DB_CONFIG["user"], DB_CONFIG["password"], DB_CONFIG["dbname"])
