@@ -1,0 +1,9 @@
+{
+  "short_name": "Buddy",
+  "name": "Buddy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#3367D6",
+  "gcm_sender_id": "103953800507",
+  "theme_color": "#3367D6"
+}

@@ -12,8 +12,10 @@
         <button onclick="getLocation()">Check In</button>
     </div>
     <div>
-        <button onclick="findNearMe()">Locate</button>
+        <button onclick="initializeUI()">GET PUSH</button>
     </div>
+        <div id="token"></div>
+        <div id="messages"></div>
     <p id="demo"> </p>
 {{else}}
 <a href="{{.authUrl}}">login</a>
