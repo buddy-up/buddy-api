@@ -3,11 +3,31 @@
 <html>
 <head>
     <title>{{.title}}</title>
+    <link rel="manifest" href="/public/manifest.json">
     <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}">
     <link rel="stylesheet" type="text/css" media="screen" href="/public/css/bootstrap-3.3.6.min.css">
     <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAjxYZg1ZKMTq-5VWMH96jJka7y4hSpPKI",
+            authDomain: "buddy-app-216002.firebaseapp.com",
+            databaseURL: "https://buddy-app-216002.firebaseio.com",
+            projectId: "buddy-app-216002",
+            storageBucket: "buddy-app-216002.appspot.com",
+            messagingSenderId: "517346446613"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase-messaging.js"></script>
+
     <script src="/public/js/jquery-2.2.4.min.js" type="text/javascript"></script>
     <script src="/public/js/app/getLocation.js" type="text/javascript"></script>
     <script src="/public/js/app/worker.js" type="text/javascript"></script>
+    <script src="/public/js/app/sendNotification.js.js" type="text/javascript"></script>
 </head>
 <body>
