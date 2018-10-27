@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/skylerjaneclark/buddy-api/app/models"
 	"os"
+	"math/big"
 )
 var DB_CONFIG = map[string]string{
 	"host" :os.Getenv("DB_HOSTNAME"),			//The hostname of the database to connect to
@@ -72,6 +73,14 @@ func getUserData(userData map[string]interface{}, user *models.User) *models.Use
 
 	sqlStatement := `SELECT firstname, lastname FROM users WHERE id=$1;`
 	row:= db.QueryRow(sqlStatement, userData["sub"])
+	id := new(big.Int)
+	id, ok := id.SetString(userData["sub"].(string), 10)
+	if !ok {
+		fmt.Println("SetString: error")
+		return nil
+	}
+	user.Id = *id
+
 	switch err := row.Scan(&user.Firstname, &user.Lastname); err{
 		case sql.ErrNoRows:
 			fmt.Print("")

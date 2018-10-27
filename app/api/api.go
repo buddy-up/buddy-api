@@ -40,7 +40,6 @@ func GetAccessToken (accessToken *oauth2.Token, user *models.User) AccessTokenDa
 	defer data.Body.Close()
 	response, _ := ioutil.ReadAll(data.Body)
 	json.Unmarshal(response, &me)
-
 	if getUserData(me, user).Firstname == "" {
 		createUser(me)
 	}

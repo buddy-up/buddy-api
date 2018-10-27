@@ -52,6 +52,7 @@ func (c Application) Auth(code string) revel.Result {
 */
 func (c Application) Logout (code string) revel.Result {
 	c.connected().AccessToken = nil
+	c.ViewArgs["user"] = nil
 	return c.Redirect(Application.Index)
 }
 

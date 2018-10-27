@@ -2,24 +2,26 @@ package controllers
 
 import (
 	"fmt"
-	"github.com/gomodule/redigo/redis"
+	"os"
+	"strconv"
+
+	//"github.com/gomodule/redigo/redis"
 	"github.com/revel/revel"
 	"github.com/skylerjaneclark/buddy-api/app/models"
-	"os"
+	"gopkg.in/redis.v3"
 )
 
 /*
 	RedisConnect
 	connects to the redis DB
 */
-func RedisConnect() redis.Conn {
-	c, err := redis.Dial(os.Getenv("REDIS_URI"), os.Getenv("REDIS_PORT")) //uses redigo to dial the URI and port
-	if err != nil{
-		panic(err)
-	}
-	response, err := c.Do("AUTH", os.Getenv("REDIS_PASSWORD")) //if your redis has a password you need this
-	fmt.Printf("Connected! ", response)
-	return c
+func RedisConnect() *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:    os.Getenv("REDIS_URI") + os.Getenv("REDIS_PORT")  ,
+		Password: os.Getenv("REDIS_PASSWORD"),
+		DB:       0,  // use default DB
+	})
+	return client
 }
 
 /*
@@ -28,19 +30,19 @@ func RedisConnect() redis.Conn {
 	Makes a connection to redis, and sets the latitude and longitude of a user before redirecting back to the main app.
 */
 func (c Application) CheckIn (code string) revel.Result {
-	latitude := c.Params.Form.Get("latitude")
-	longitude := c.Params.Form.Get("longitude")
-	user := c.ViewArgs["user"].(*models.User)
-
-	conn := RedisConnect()
-
-	locationSetReply, locationSetErr := conn.Do("GEOADD", "user_locations", latitude, longitude, user.Id)
-
-	if locationSetErr != nil{
-		panic(locationSetErr)
+	latitude, latitudeErr := strconv.ParseFloat(c.Params.Form.Get("latitude"), 64)
+	longitude, longitudeErr := strconv.ParseFloat(c.Params.Form.Get("longitude"), 64)
+	if longitudeErr != nil {
+		fmt.Println(longitudeErr)
 	}
+	if latitudeErr != nil {
+		fmt.Println(latitudeErr)
+	}
+	user := c.connected()
+	client := RedisConnect()
+
+	locationSetReply := client.GeoAdd("user_locations", &redis.GeoLocation{Latitude:latitude, Longitude:longitude, Name:user.Id.String()})
 	fmt.Println("GET ", locationSetReply)
-	defer conn.Close()
 
 	fmt.Println(latitude)
 	fmt.Println(longitude)
@@ -49,14 +51,21 @@ func (c Application) CheckIn (code string) revel.Result {
 
 func (c Application) FindNearby (code string) revel.Result {
 	user := c.ViewArgs["user"].(*models.User)
+	client := RedisConnect()
 
-	conn := RedisConnect()
+	res, err := client.GeoRadiusByMember("user_locations", user.Id.String(), &redis.GeoRadiusQuery{
+		Radius:      20,
+		Unit:        "km",
+		WithCoord:   true,
+		WithDist:    true,
+		Count:       10,
+		Sort:        "ASC",
+	}).Result()
 
-	nums, err := redis.Values(conn.Do("GEORADIUS", user.Id, 15, 37, 200, "km", "WITHCOORD", "WITHDIST"))
 	if(err != nil){
-		fmt.Print(err)
+		fmt.Println(err)
 	}
-	fmt.Println(nums)
+	fmt.Println(res)
 	return c.Redirect(Application.Index)
 
 }
