@@ -8,10 +8,18 @@ import (
 
 func (c Application) SaveInstanceId (code string) revel.Result {
 	instanceId := c.Params.Form.Get("instanceId")
+	origin := c.Params.Form.Get("origin")
 	user := c.connected()
-	user.FireBaseInstanceIds = append(user.FireBaseInstanceIds, instanceId)
-	api.StoreInstanceId(*user, instanceId)
+
+	if origin == "ANDROID" {
+		user.FireBaseInstanceIds.Android = instanceId
+	} else if origin == "CHROME"{
+		user.FireBaseInstanceIds.Web = instanceId
+	} else {
+		user.FireBaseInstanceIds.IOS = instanceId
+	}
+	api.StoreInstanceId(*user, instanceId, origin)
 	fmt.Println(instanceId)
-	fmt.Print("instanceID saved")
+	fmt.Println("instanceID saved")
 	return c.Redirect(Application.Index)
 }

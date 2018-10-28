@@ -90,12 +90,11 @@ func getUserData(userData map[string]interface{}, user *models.User) *models.Use
 	return user
 }
 
-func StoreInstanceId (user models.User, instanceId string){
+func StoreInstanceId (user models.User, instanceId string, origin string){
 	db := dbConnect()
 	sqlStatement := `
-			UPDATE InstanceIds SET instanceId =`+
-			instanceId +` WHERE id = `+ user.Id.String() +`;`
+			UPDATE InstanceIds SET (instanceId, origin) = (`+
+			instanceId + `,` + origin +`) WHERE id = `+ user.Id.String() +`;`
 	db.Exec(sqlStatement)
 	defer db.Close()
-
 }
