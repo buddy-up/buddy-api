@@ -32,6 +32,10 @@ func (c Application) Index() revel.Result {
 	return c.Render(me, authUrl)
 }
 
+func (c Application) Aaa() revel.Result {
+	return c.Render()
+}
+
 /*
 	Auth
 	sets the session's access token, and redirects to the index. The final step of the Oauth tango.
