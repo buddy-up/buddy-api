@@ -7,8 +7,8 @@ module:testrunner
 # Home page
 GET     /                                       Application.Index
 GET     /logout                                 Application.Logout
+GET     /aaa                                    Application.Aaa
 GET     /firebase-messaging-sw.js               Static.Serve("public/firebase-messaging-sw.js")
-GET     /aaa                                    Static.Serve("app/views/Application/aaa.html")
 #Location Data
 POST    /checkin                                Application.CheckIn
 POST    /find_nearby                                Application.FindNearby
