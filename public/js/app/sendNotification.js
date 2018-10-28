@@ -77,7 +77,7 @@ function requestPermission() {
 
 function deleteToken() {
     messaging.getToken().then(function(currentToken) {
-        messaging.getToken().then(function(currentToken) {
+        messaging.deleteToken(currentToken).then(function() {
             console.log('Token deleted.');
             setTokenSentToServer(false);
             resetUI()
@@ -91,7 +91,6 @@ function deleteToken() {
 }
 
 function setTokenSentToServer(sent) {
-    console.log(sent)
     window.localStorage.setItem('sentToServer', sent ? '1' : '0');
 }
 
