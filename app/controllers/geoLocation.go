@@ -1,14 +1,17 @@
 package controllers
 
 import (
+	"firebase.google.com/go"
+	"firebase.google.com/go/messaging"
 	"fmt"
-	"os"
-	"strconv"
-
-	//"github.com/gomodule/redigo/redis"
 	"github.com/revel/revel"
 	"github.com/skylerjaneclark/buddy-api/app/models"
+	"golang.org/x/net/context"
+	"google.golang.org/api/option"
 	"gopkg.in/redis.v3"
+	"log"
+	"os"
+	"strconv"
 )
 
 /*
@@ -57,6 +60,8 @@ func (c Application) CheckIn (code string) revel.Result {
 	return c.Redirect(Application.Index)
 }
 
+
+
 func (c Application) FindNearby (code string) revel.Result {
 	user := c.ViewArgs["user"].(*models.User)
 	client := RedisConnect()
@@ -70,7 +75,38 @@ func (c Application) FindNearby (code string) revel.Result {
 		Sort:        "ASC",
 	}).Result()
 
-	if(err != nil){
+	for index, element := range res {
+
+		opt := option.WithCredentialsFile("conf/buddy-app-216002-firebase-adminsdk-i6xvt-80c7595d87.json")
+		app, err := firebase.NewApp(context.Background(), nil, opt)
+		if err != nil {
+			log.Fatalf("error initializing app: %v\n", err)
+		}
+
+		ctx := context.Background()
+		client, err := app.Messaging(ctx)
+		registrationToken := element.Name
+
+		message := &messaging.Message{
+			Data: map[string]string{
+				"score": "850",
+				"time":  "2:45",
+			},
+			Token: registrationToken,
+		}
+
+		response, err := client.Send(ctx, message)
+		if err != nil {
+			log.Fatalln(err)
+		}
+		fmt.Println("Successfully sent message:", response)
+
+
+		fmt.Println(element.Name)
+		fmt.Println(index)
+	}
+
+		if(err != nil){
 		fmt.Println(err)
 	}
 	fmt.Println(res)
