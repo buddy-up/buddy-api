@@ -1,15 +1,10 @@
 package controllers
 
 import (
-	"firebase.google.com/go"
-	"firebase.google.com/go/messaging"
 	"fmt"
 	"github.com/revel/revel"
 	"github.com/skylerjaneclark/buddy-api/app/models"
-	"golang.org/x/net/context"
-	"google.golang.org/api/option"
 	"gopkg.in/redis.v3"
-	"log"
 	"os"
 	"strconv"
 )
@@ -77,29 +72,29 @@ func (c Application) FindNearby (code string) revel.Result {
 
 	for index, element := range res {
 
-		opt := option.WithCredentialsFile("conf/buddy-app-216002-firebase-adminsdk-i6xvt-80c7595d87.json")
-		app, err := firebase.NewApp(context.Background(), nil, opt)
-		if err != nil {
-			log.Fatalf("error initializing app: %v\n", err)
-		}
-
-		ctx := context.Background()
-		client, err := app.Messaging(ctx)
-		registrationToken := element.Name
-
-		message := &messaging.Message{
-			Data: map[string]string{
-				"score": "850",
-				"time":  "2:45",
-			},
-			Token: registrationToken,
-		}
-
-		response, err := client.Send(ctx, message)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		fmt.Println("Successfully sent message:", response)
+		//opt := option.WithCredentialsFile("conf/buddy-app-216002-firebase-adminsdk-i6xvt-80c7595d87.json")
+		//app, err := firebase.NewApp(context.Background(), nil, opt)
+		//if err != nil {
+		//	log.Fatalf("error initializing app: %v\n", err)
+		//}
+		//
+		//ctx := context.Background()
+		//client, err := app.Messaging(ctx)
+		//registrationToken := element.Name
+		//
+		//message := &messaging.Message{
+		//	Data: map[string]string{
+		//		"score": "850",
+		//		"time":  "2:45",
+		//	},
+		//	Token: registrationToken,
+		//}
+		//
+		//response, err := client.Send(ctx, message)
+		//if err != nil {
+		//	log.Fatalln(err)
+		//}
+		//fmt.Println("Successfully sent message:", response)
 
 
 		fmt.Println(element.Name)
