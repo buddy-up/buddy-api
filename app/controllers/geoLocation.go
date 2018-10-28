@@ -5,7 +5,6 @@ import (
 	"firebase.google.com/go/messaging"
 	"fmt"
 	"github.com/revel/revel"
-	"github.com/skylerjaneclark/buddy-api/app/models"
 	"golang.org/x/net/context"
 	"google.golang.org/api/option"
 	"gopkg.in/redis.v3"
@@ -62,10 +61,22 @@ func (c Application) CheckIn (code string) revel.Result {
 
 
 func (c Application) FindNearby (code string) revel.Result {
-	user := c.ViewArgs["user"].(*models.User)
+	user := c.connected()
 	client := RedisConnect()
 
-	res, err := client.GeoRadiusByMember("user_locations", user.Id.String(), &redis.GeoRadiusQuery{
+	userId := ""
+	if user.FireBaseInstanceIds.Android != "" {
+		userId = user.FireBaseInstanceIds.Android
+	}else if user.FireBaseInstanceIds.IOS != ""{
+		userId = user.FireBaseInstanceIds.IOS
+	}else{
+		userId = user.FireBaseInstanceIds.Web
+	}
+
+	fmt.Println(userId)
+
+
+	res, err := client.GeoRadiusByMember("user_locations",userId, &redis.GeoRadiusQuery{
 		Radius:      20,
 		Unit:        "km",
 		WithCoord:   true,
@@ -73,7 +84,7 @@ func (c Application) FindNearby (code string) revel.Result {
 		Count:       10,
 		Sort:        "ASC",
 	}).Result()
-
+	
 	for index, element := range res {
 
 		opt := option.WithCredentialsFile("conf/buddy-app-216002-firebase-adminsdk-i6xvt-80c7595d87.json")
