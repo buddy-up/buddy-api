@@ -50,22 +50,11 @@ function sendTokenToServer(currentToken) {
 
         $.ajax({
             type: "POST",
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", "AIzaSyAjxYZg1ZKMTq-5VWMH96jJka7y4hSpPKI");
-            },
-            url: "https://iid.googleapis.com/iid/info/" + currentToken,
-            success:function (data) {
-                $.ajax({
-                    type: "POST",
-                    url: "/save_instance_id",
-                    data:{
-                        "instanceId" : currentToken,
-                        "origin" : JSON.parse(data)['platform']
-                    }
-                });
+            url: "/save_instance_id",
+            data:{
+                "instanceId" : currentToken,
             }
         });
-
 
         setTokenSentToServer(true);
     } else {
