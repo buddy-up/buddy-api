@@ -23,7 +23,6 @@ func dbConnect()*sql.DB{
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
 	return db
 }
 
@@ -58,6 +57,7 @@ func createUser(userData map[string]interface{}){
 	db.Exec(sqlStatement)
 
 	}
+	defer db.Close()
 }
 /*
 	getUserData
@@ -85,6 +85,8 @@ func getUserData(userData map[string]interface{}, user *models.User) *models.Use
 		default:
 			panic(err)
 	}
+	defer db.Close()
+
 	return user
 }
 
@@ -94,4 +96,6 @@ func StoreInstanceId (user models.User, instanceId string){
 			UPDATE InstanceIds SET instanceId =`+
 			instanceId +` WHERE id = `+ user.Id.String() +`;`
 	db.Exec(sqlStatement)
+	defer db.Close()
+
 }
