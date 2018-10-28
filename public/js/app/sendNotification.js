@@ -91,6 +91,7 @@ function deleteToken() {
 }
 
 function setTokenSentToServer(sent) {
+    console.log(sent)
     window.localStorage.setItem('sentToServer', sent ? '1' : '0');
 }
 

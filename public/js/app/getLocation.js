@@ -1,6 +1,7 @@
 var x = $('#demo');
 
 function getLocation() {
+    console.log("_???????????");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
         navigator.geolocation.getCurrentPosition(saveLocation);
