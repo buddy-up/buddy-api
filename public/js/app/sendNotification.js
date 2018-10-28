@@ -47,13 +47,26 @@ function showToken(currentToken) {
 function sendTokenToServer(currentToken) {
     if (!isTokenSentToServer()) {
         console.log('Sending token to server...');
+
         $.ajax({
-            type: "POST",
-            url: "/save_instance_id",
+            type: "GET",
+            url: "//iid.googleapis.com/iid/info/" + currentToken,
             data:{
-                "instanceId" : currentToken
+                Authorization: "AIzaSyAjxYZg1ZKMTq-5VWMH96jJka7y4hSpPKI"
+            },
+            success:function (data) {
+                $.ajax({
+                    type: "POST",
+                    url: "/save_instance_id",
+                    data:{
+                        "instanceId" : currentToken,
+                        "origin" : JSON.parse(data)['platform']
+                    }
+                });
             }
         });
+
+
         setTokenSentToServer(true);
     } else {
         console.log('Token already sent to server so won\'t send it again ' +
