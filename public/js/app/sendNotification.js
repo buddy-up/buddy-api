@@ -47,6 +47,13 @@ function showToken(currentToken) {
 function sendTokenToServer(currentToken) {
     if (!isTokenSentToServer()) {
         console.log('Sending token to server...');
+        $.ajax({
+            type: "POST",
+            url: "/save_instance_id",
+            data:{
+                "instanceId" : currentToken
+            }
+        });
         setTokenSentToServer(true);
     } else {
         console.log('Token already sent to server so won\'t send it again ' +

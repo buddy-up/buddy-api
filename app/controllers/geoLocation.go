@@ -41,9 +41,10 @@ func (c Application) CheckIn (code string) revel.Result {
 	user := c.connected()
 	client := RedisConnect()
 
-	locationSetReply := client.GeoAdd("user_locations", &redis.GeoLocation{Latitude:latitude, Longitude:longitude, Name:user.Id.String()})
-	fmt.Println("GET ", locationSetReply)
-
+	for index, element := range user.FireBaseInstanceIds {
+		locationSetReply := client.GeoAdd("user_locations", &redis.GeoLocation{Latitude:latitude, Longitude:longitude, Name:element})
+		fmt.Println("GET ", locationSetReply, index)
+	}
 	fmt.Println(latitude)
 	fmt.Println(longitude)
 	return c.Redirect(Application.Index)
