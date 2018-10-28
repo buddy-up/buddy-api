@@ -50,7 +50,7 @@ function sendTokenToServer(currentToken) {
 
         $.ajax({
             type: "GET",
-            url: "//iid.googleapis.com/iid/info/" + currentToken,
+            url: "https://iid.googleapis.com/iid/info/" + currentToken,
             data:{
                 Authorization: "AIzaSyAjxYZg1ZKMTq-5VWMH96jJka7y4hSpPKI"
             },
