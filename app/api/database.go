@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/skylerjaneclark/buddy-api/app/models"
-	"os"
 	"math/big"
+	"os"
 )
 var DB_CONFIG = map[string]string{
 	"host" :os.Getenv("DB_HOSTNAME"),			//The hostname of the database to connect to
@@ -15,13 +15,7 @@ var DB_CONFIG = map[string]string{
 	"dbname" : os.Getenv("DB_NAME"),			//The name of the db to connect to
 }
 
-/*
-	createUser
-	This is the function that creates the user.
-	It first connects to the database, then gets the data given by the session's user object,
-	and inserts those into the database as a new user.
-*/
-func createUser(userData map[string]interface{}){
+func dbConnect()*sql.DB{
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+ "password=%s dbname=%s",
 		DB_CONFIG["host"], DB_CONFIG["port"], DB_CONFIG["user"], DB_CONFIG["password"], DB_CONFIG["dbname"])
 
@@ -30,6 +24,17 @@ func createUser(userData map[string]interface{}){
 		panic(err)
 	}
 	defer db.Close()
+	return db
+}
+
+/*
+	createUser
+	This is the function that creates the user.
+	It first connects to the database, then gets the data given by the session's user object,
+	and inserts those into the database as a new user.
+*/
+func createUser(userData map[string]interface{}){
+	db := dbConnect()
 
 	if val, ok := userData["given_name"]; !ok {
 		userData["first_name"] = ""
@@ -50,10 +55,8 @@ func createUser(userData map[string]interface{}){
 			VALUES ('`+ userData["sub"].(string) +`',
 					'`+ userData["given_name"].(string)+`',
 					'`+ userData["family_name"].(string)+`');`
-		_, err = db.Exec(sqlStatement)
-		if err != nil {
-			panic(err)
-		}
+	db.Exec(sqlStatement)
+
 	}
 }
 /*
@@ -62,14 +65,7 @@ func createUser(userData map[string]interface{}){
 	It connects to the db and gets the user that exists with the id.
 */
 func getUserData(userData map[string]interface{}, user *models.User) *models.User {
-	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+ "password=%s dbname=%s",
-		DB_CONFIG["host"], DB_CONFIG["port"], DB_CONFIG["user"], DB_CONFIG["password"], DB_CONFIG["dbname"])
-
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+	db:= dbConnect()
 
 	sqlStatement := `SELECT firstname, lastname FROM users WHERE id=$1;`
 	row:= db.QueryRow(sqlStatement, userData["sub"])
@@ -89,8 +85,13 @@ func getUserData(userData map[string]interface{}, user *models.User) *models.Use
 		default:
 			panic(err)
 	}
-	if err != nil {
-		panic(err)
-	}
 	return user
+}
+
+func StoreInstanceId (user models.User, instanceId string){
+	db := dbConnect()
+	sqlStatement := `
+			UPDATE InstanceIds SET instanceId =`+
+			instanceId +` WHERE id = `+ user.Id.String() +`;`
+	db.Exec(sqlStatement)
 }

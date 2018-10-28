@@ -8,10 +8,13 @@ module:testrunner
 GET     /                                       Application.Index
 GET     /logout                                 Application.Logout
 GET     /firebase-messaging-sw.js               Static.Serve("public/firebase-messaging-sw.js")
+
 #Location Data
 POST    /checkin                                Application.CheckIn
-POST    /find_nearby                                Application.FindNearby
+POST    /find_nearby                            Application.FindNearby
 
+#Notification Routes
+POST    /save_instance_id                       Application.SaveInstanceID
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/*filepath              Static.Serve("public")
