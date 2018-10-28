@@ -8,10 +8,9 @@ importScripts('https://www.gstatic.com/firebasejs/4.13.0/firebase-messaging.js')
 // Import and configure the Firebase SDK
 // These scripts are made available when the app is served or deployed on Firebase Hosting
 // If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup
-// firebase.initializeApp({
-//     'messagingSenderId': 'BN5cHhpN8vO_bWKQ9LwvT5vaMTep6W1O4DOoA-DCjwDSkreGTFzKBKCFM3TAtNGAJ1oAdsTdrxguxG_HhiVVu9I'
-// });
-
+firebase.initializeApp({
+    'messagingSenderId': 'BN5cHhpN8vO_bWKQ9LwvT5vaMTep6W1O4DOoA-DCjwDSkreGTFzKBKCFM3TAtNGAJ1oAdsTdrxguxG_HhiVVu9I'
+});
 
 var messaging = firebase.messaging();
 
