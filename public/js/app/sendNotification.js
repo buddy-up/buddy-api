@@ -49,11 +49,11 @@ function sendTokenToServer(currentToken) {
         console.log('Sending token to server...');
 
         $.ajax({
-            type: "GET",
-            url: "https://iid.googleapis.com/iid/info/" + currentToken,
-            data:{
-                Authorization: "AIzaSyAjxYZg1ZKMTq-5VWMH96jJka7y4hSpPKI"
+            type: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", "AIzaSyAjxYZg1ZKMTq-5VWMH96jJka7y4hSpPKI");
             },
+            url: "https://iid.googleapis.com/iid/info/" + currentToken,
             success:function (data) {
                 $.ajax({
                     type: "POST",
