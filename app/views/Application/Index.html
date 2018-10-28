@@ -12,10 +12,12 @@
         <button onclick="getLocation()">Check In</button>
     </div>
     <div>
-        <button onclick="initializeUI()">GET PUSH</button>
+        <button onclick="initFirebaseMessagingRegistration()">GET PUSH</button>
     </div>
         <div id="token"></div>
-        <div id="messages"></div>
+        <div id="message"></div>
+        <div id="notification"></div>
+        <div id="error"></div>
     <p id="demo"> </p>
 {{else}}
 <a href="{{.authUrl}}">login</a>
