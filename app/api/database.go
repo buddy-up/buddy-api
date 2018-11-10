@@ -55,7 +55,6 @@ func createUser(userData map[string]interface{}){
 					'`+ userData["given_name"].(string)+`',
 					'`+ userData["family_name"].(string)+`');`
 	db.Exec(sqlStatement)
-
 	}
 	defer db.Close()
 }
@@ -75,8 +74,6 @@ func getUserData(userData map[string]interface{}, user *models.User) *models.Use
 		fmt.Println("SetString: error")
 		return nil
 	}
-	user.Id = *id
-
 	switch err := row.Scan(&user.Firstname, &user.Lastname); err{
 		case sql.ErrNoRows:
 			fmt.Print("")
@@ -90,11 +87,49 @@ func getUserData(userData map[string]interface{}, user *models.User) *models.Use
 	return user
 }
 
-func StoreInstanceId (user models.User, instanceId string, origin string){
+func StoreInstanceId (user *models.User, instanceId string, origin string){
 	db := dbConnect()
-	sqlStatement := `
-			UPDATE InstanceIds SET (instanceId, origin) = (`+
-			instanceId + `,` + origin +`) WHERE id = `+ user.Id.String() +`;`
+	sqlStatement := ""
+	if origin == "ANDROID" {
+		sqlStatement = `
+			INSERT INTO instanceIds (id, android )
+			VALUES ('`+ user.Id+`',
+					'`+ instanceId+`'),
+			ON CONFLICT(id) DO UPDATE SET android = '`+ instanceId +`';
+			`
+	}else if origin == "IOS" {
+		sqlStatement = `
+			INSERT INTO instanceIds (id, ios )
+			VALUES ('`+ user.Id+`',
+					'`+ instanceId+`')
+			ON CONFLICT(id) DO UPDATE SET ios = '`+ instanceId +`';
+;`
+	}else{
+		sqlStatement = `
+			INSERT INTO instanceIds (id, web )
+			VALUES ('`+ user.Id+`',
+					'`+ instanceId+`')
+			ON CONFLICT(id) DO UPDATE SET web = '`+ instanceId +`';
+;`
+	}
 	db.Exec(sqlStatement)
+	defer db.Close()
+}
+
+func GetInstanceIds(user *models.User){
+	db:= dbConnect()
+
+	sqlStatement := `SELECT android, ios, web FROM instanceids WHERE id=$1;`
+	row:= db.QueryRow(sqlStatement, user.Id)
+
+	switch err := row.Scan(&user.FireBaseInstanceIds.Android, &user.FireBaseInstanceIds.IOS, &user.FireBaseInstanceIds.Web);err{
+	case sql.ErrNoRows:
+		fmt.Print("")
+	case nil:
+		fmt.Print("success _______________________")
+	default:
+		panic(err)
+	}
+
 	defer db.Close()
 }

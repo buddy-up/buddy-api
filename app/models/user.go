@@ -2,7 +2,6 @@ package models
 
 import (
 	"golang.org/x/oauth2"
-	"math/big"
 	"math/rand"
 )
 
@@ -12,7 +11,7 @@ type User struct {
 	Firstname string			//The first name of the user
 	Lastname string				//The last name of the user
 	Email string				//The Email of the user
-	Id big.Int					//The ID of the user. Different from UID. UID is saved as a cookie in session. ID is gotten from oauth with their name.
+	Id string					//The ID of the user. Different from UID. UID is saved as a cookie in session. ID is gotten from oauth with their name.
 	FireBaseInstanceIds fireBaseIds	//The instanceIDs used by FireBase to send notifications to the user
 }
 

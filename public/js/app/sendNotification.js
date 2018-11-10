@@ -86,6 +86,13 @@ function requestPermission() {
 
 function deleteToken() {
     messaging.getToken().then(function(currentToken) {
+        $.ajax({
+            type: "POST",
+            url: "/delete_id",
+            data:{
+                "instanceId" : currentToken,
+            }
+        });
         messaging.deleteToken(currentToken).then(function() {
             console.log('Token deleted.');
             setTokenSentToServer(false);
