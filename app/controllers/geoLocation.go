@@ -5,6 +5,7 @@ import (
 	"firebase.google.com/go/messaging"
 	"fmt"
 	"github.com/revel/revel"
+	"github.com/skylerjaneclark/buddy-api/app/api"
 	"golang.org/x/net/context"
 	"google.golang.org/api/option"
 	"gopkg.in/redis.v3"
@@ -58,23 +59,29 @@ func (c Application) CheckIn (code string) revel.Result {
 	return c.Redirect(Application.Index)
 }
 
+func (c Application) RemoveGeoLocation() revel.Result{
+	instanceId := c.Params.Form.Get("instanceId")
 
+	client := RedisConnect()
+	res, err := client.ZRem("user_locations", instanceId).Result()
+	fmt.Println(res)
+	fmt.Println(err)
+	return c.Redirect(Application.Index)
+}
 
 func (c Application) FindNearby (code string) revel.Result {
 	user := c.connected()
 	client := RedisConnect()
 
+	api.GetInstanceIds(user)
 	userId := ""
 	if user.FireBaseInstanceIds.Android != "" {
 		userId = user.FireBaseInstanceIds.Android
 	}else if user.FireBaseInstanceIds.IOS != ""{
 		userId = user.FireBaseInstanceIds.IOS
-	}else{
+	}else if user.FireBaseInstanceIds.Web != ""{
 		userId = user.FireBaseInstanceIds.Web
 	}
-
-	fmt.Println(userId)
-
 
 	res, err := client.GeoRadiusByMember("user_locations",userId, &redis.GeoRadiusQuery{
 		Radius:      20,
@@ -87,8 +94,9 @@ func (c Application) FindNearby (code string) revel.Result {
 	
 	for index, element := range res {
 
-		opt := option.WithCredentialsFile("conf/buddy-app-216002-firebase-adminsdk-i6xvt-80c7595d87.json")
-		app, err := firebase.NewApp(context.Background(), nil, opt)
+		opt := option.WithCredentialsFile(os.Getenv("FIREBASE_CONF_LOCATION"))
+
+		app, err := firebase.NewApp(context.Background(), nil,opt)
 		if err != nil {
 			panic(err)
 			return nil
@@ -111,8 +119,6 @@ func (c Application) FindNearby (code string) revel.Result {
 			return nil
 		}
 		fmt.Println("Successfully sent message:", response)
-
-		fmt.Println(element.Name)
 		fmt.Println(index)
 	}
 

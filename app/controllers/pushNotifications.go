@@ -52,7 +52,8 @@ func (c Application) SaveInstanceId (code string) revel.Result {
 	} else {
 		user.FireBaseInstanceIds.IOS = instanceId
 	}
-	api.StoreInstanceId(*user, instanceId, idInfo.platform)
+
+	api.StoreInstanceId(user, instanceId, idInfo.platform)
 	fmt.Println(instanceId)
 	fmt.Println("instanceID saved")
 	return c.Redirect(Application.Index)
