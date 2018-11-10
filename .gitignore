@@ -7,3 +7,4 @@ app/controllers/oauth-creds.go
 conf/exec
 app/db/dbconf.yml
 *.pem
+vendor/
