@@ -56,7 +56,7 @@ func GetAccessToken (accessToken *oauth2.Token, user *models.User) AccessTokenDa
 func Authenticate(code string) *oauth2.Token{
 	tok, err := GOOGLE.Exchange(oauth2.NoContext, code)
 	if err != nil {
-		revel.ERROR.Println(err)
+		fmt.Println(err)
 		return tok
 	}
 	return tok
