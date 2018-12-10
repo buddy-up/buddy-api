@@ -2,7 +2,7 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/revel/revel"
+	"fmt"
 	"github.com/skylerjaneclark/buddy-api/app/models"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
