@@ -1,5 +1,5 @@
 hash: 3441bf6ff6d443d7e65fcdfc4f1d1b67e506cee012ed3b4901bbe2aab9890aa9
-updated: 2018-11-10T17:48:29.317207831-05:00
+updated: 2018-11-10T18:11:17.703869942-05:00
 imports:
 - name: cloud.google.com/go
   version: 193e596dec49639d9e0426074676ab1e59201b3d
@@ -58,6 +58,7 @@ imports:
   version: a50f5f138880b68aef235a7c1f3f09ba56b71d45
   subpackages:
   - static/app/controllers
+  - static/app/model
   - testrunner/app
   - testrunner/app/controllers
 - name: github.com/revel/pathtree
@@ -71,8 +72,12 @@ imports:
   - testing
   - utils
 - name: github.com/skylerjaneclark/buddy-api
-  version: 3a0067baa0784f28f91cb46aff1ff2d7cc054932
+  version: 02143c7f3fd1478f30e4f5064da7e34a8f0fb417
   subpackages:
+  - app
+  - app/api
+  - app/controllers
+  - app/models
   - tests
 - name: github.com/twinj/uuid
   version: 7bbe408d339787c56ec15568c947c0959db1b275
