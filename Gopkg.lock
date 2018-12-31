@@ -116,19 +116,6 @@
   version = "v2.11.20"
 
 [[projects]]
-  digest = "1:a0dfd75e72729ee0c32ac924f4eca3939647e10ce46fad7b11d9ea81088aeeca"
-  name = "github.com/revel/modules"
-  packages = [
-    "static/app/controllers",
-    "static/app/model",
-    "testrunner/app",
-    "testrunner/app/controllers",
-  ]
-  pruneopts = "UT"
-  revision = "5b32282b7105399923bc37f2319dd003f526b4f1"
-  version = "v0.20.0"
-
-[[projects]]
   branch = "master"
   digest = "1:a0812e773563f2e41afebf582088a86b0f01eb5bd794c19ecc1bce25820b1fa2"
   name = "github.com/revel/pathtree"
@@ -137,16 +124,27 @@
   revision = "41257a1839e945fce74afd070e02bab2ea2c776a"
 
 [[projects]]
-  digest = "1:bb9dd47ed3ff114d3dd5341629c55b66fb93479ed30ed2569a16c0c3c34ccdd9"
+  digest = "1:ef5e3a0a30003e31625b6d0954565f0f9d21797ff22a456d73ba138f62873310"
   name = "github.com/revel/revel"
   packages = [
     ".",
     "logger",
+    "model",
+    "session",
     "testing",
+    "utils",
   ]
   pruneopts = "UT"
-  revision = "fd65ef0defe5fa045524fd3319515793162a3628"
-  version = "v0.20.0"
+  revision = "a3d7a7c23ca885cc5036d3641ede49ce4a14ee2e"
+  version = "v0.21.0"
+
+[[projects]]
+  digest = "1:8f41bbca0d6435bb54d7c090336f7693942cda30f9126eaf3959b8df48721ac3"
+  name = "github.com/twinj/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "835a10bbd6bce40820349a68b1368a62c3c5617c"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:aafbac4d92cf743e01242738f6aa09cb7aa5259d7e1221cc2c146eb99854cc8e"
@@ -390,9 +388,6 @@
     "firebase.google.com/go",
     "firebase.google.com/go/messaging",
     "github.com/lib/pq",
-    "github.com/revel/modules/static/app/controllers",
-    "github.com/revel/modules/testrunner/app",
-    "github.com/revel/modules/testrunner/app/controllers",
     "github.com/revel/revel",
     "github.com/revel/revel/testing",
     "golang.org/x/net/context",

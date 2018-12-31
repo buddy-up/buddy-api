@@ -64,7 +64,9 @@ func (c Application) Logout (code string) revel.Result {
 */
 func setuser(c *revel.Controller) revel.Result {
 	var user *models.User
-	if _, ok := c.Session["uid"]; ok {
+	if _, ok := c.Session["uid"]; ok{
+
+		fmt.Printf("%T %T", c.Session, c.Session["uid"])
 		uid, _ := strconv.ParseInt(c.Session["uid"].(string), 10, 0)
 		user = models.GetUser(int(uid))
 	}

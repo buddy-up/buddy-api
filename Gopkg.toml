@@ -24,14 +24,13 @@
 #   go-tests = true
 #   unused-packages = true
 
-
-[[constraint]]
+[[override]]
   name = "github.com/revel/modules"
-  version = "0.20.0"
+  version = "0.21.0"
 
 [[constraint]]
   name = "github.com/revel/revel"
-  version = "0.20.0"
+  version = "0.21.0"
 
 [[constraint]]
   branch = "master"
