@@ -27,7 +27,7 @@
 
 [[override]]
   name = "github.com/revel/modules"
-  version = "0.20.1"
+  version = "0.21.0"
 
 [[override]]
   name = "github.com/revel/revel"
@@ -41,4 +41,4 @@
   go-tests = true
 #unused-packages = true
 #if you have unused packages enabled, god WILL strike you down
-#basically it just deletes all revel modules once you install them.
+#dep deletes dependencies that you actually Need, and the revel modules suffer.

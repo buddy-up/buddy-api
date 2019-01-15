@@ -13,10 +13,8 @@ RUN go get github.com/golang/dep/cmd/dep && \
 RUN go get golang.org/x/tools/go/buildutil &&\
     go get github.com/Masterminds/glide
 
-RUN revel -v run github.com/skylerjaneclark/buddy-api
+# Use the revel CLI to start up our application.
+ENTRYPOINT revel run github.com/skylerjaneclark/buddy-api dev  8080
 
-## Use the revel CLI to start up our application.
-#ENTRYPOINT revel  run github.com/skylerjaneclark/buddy-api dev  8080
-#
-## Open up the port where the app is running.
-#EXPOSE 8080
+# Open up the port where the app is running.
+EXPOSE 8080
