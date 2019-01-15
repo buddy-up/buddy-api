@@ -7,7 +7,7 @@ module:testrunner
 # Home page
 GET     /                                       Application.Index
 GET     /logout                                 Application.Logout
-GET     /firebase-messaging-sw.js               Static.Serve("public/firebase-messaging-sw.js")
+GET     /firebase-messaging-sw.js               Static.Serve("public","js/firebase-messaging-sw.js")
 
 #Location Data
 POST    /checkin                                Application.CheckIn

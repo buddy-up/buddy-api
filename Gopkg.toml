@@ -25,13 +25,13 @@
 #   unused-packages = true
 
 
-[[constraint]]
+[[override]]
   name = "github.com/revel/modules"
-  version = "0.20.0"
+  version = "0.21.0"
 
-[[constraint]]
+[[override]]
   name = "github.com/revel/revel"
-  version = "0.20.0"
+  version = "0.21.0"
 
 [[constraint]]
   branch = "master"
@@ -39,4 +39,6 @@
 
 [prune]
   go-tests = true
-  unused-packages = true
+#unused-packages = true
+#if you have unused packages enabled, god WILL strike you down
+#dep deletes dependencies that you actually Need, and the revel modules suffer.
