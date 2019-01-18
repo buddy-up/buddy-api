@@ -6,8 +6,6 @@ services:
       - "8080:8080"
     env_file:
       - docker/list.env
-    networks:
-      - redis-net
     depends_on:
       - redis
 
@@ -16,14 +14,8 @@ services:
     hostname: redis
     ports:
       - "6379:6379"
-    networks:
-      - redis-net
     volumes:
       - redis-data:/data
-
-networks:
-  redis-net:
-    driver: bridge
 
 volumes:
   redis-data:
