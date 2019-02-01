@@ -9,9 +9,11 @@ RUN go get github.com/golang/dep/cmd/dep && \
     go get github.com/revel/revel && \
     go get github.com/revel/cmd/revel
 
-
+#Install glide and build utilities
 RUN go get golang.org/x/tools/go/buildutil &&\
     go get github.com/Masterminds/glide
+
+#Install redis
 
 # Use the revel CLI to start up our application.
 ENTRYPOINT revel run github.com/skylerjaneclark/buddy-api dev  8080
